@@ -3,9 +3,10 @@ from flask import Flask
 def create_app():
     app = Flask(__name__)
 
-    # Register Blueprint
-    from apps.routes import main
+    # Correct import path
+    from app.routes import main
     app.register_blueprint(main)
 
     return app
+
 
