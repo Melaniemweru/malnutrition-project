@@ -3,61 +3,75 @@ import pandas as pd
 import joblib
 import os
 
-print("[INFO] Loading routes...")  # Confirm the file is being loaded
+print("[INFO] Loading routes...")
 
+# Create Flask blueprint
 main = Blueprint('main', __name__)
 
-# Define model and encoder paths
+# Define paths
 base_dir = os.path.abspath(os.path.dirname(__file__))
 model_path = os.path.join(base_dir, '..', 'models', 'malnutrition_rf_model.pkl')
-encoder_path = os.path.join(base_dir, '..', 'models', 'encoder.pkl')
 
-# Load model and encoder
+# Load model
 model = joblib.load(model_path)
 print("[INFO] Model loaded.")
 
-encoder = joblib.load(encoder_path)
-print("[INFO] Encoder loaded.")
+# Define the expected feature columns used during training
+expected_features = [
+    'age_months', 'weight_kg', 'height_cm', 'muac_cm', 'recent_illness',
+    'gender_Male', 'immunization_status_Partial'
+]
 
-
+# Home route (displays the form)
 @main.route('/', methods=['GET'])
 def home():
     return render_template('form.html')
 
-
+# Predict route
 @main.route('/predict', methods=['POST'])
 def predict():
     try:
-        # Collect form input
+        # Validate input fields
+        required_fields = ['age_months', 'gender', 'weight_kg', 'height_cm', 'muac_cm', 'recent_illness', 'immunization_status']
+        for field in required_fields:
+            if not request.form.get(field):
+                return render_template('form.html', prediction="Please fill all fields.")
+
+        # Manual one-hot encoding for categorical variables
         input_data = {
             'age_months': int(request.form['age_months']),
-            'gender': request.form['gender'],
             'weight_kg': float(request.form['weight_kg']),
             'height_cm': float(request.form['height_cm']),
             'muac_cm': float(request.form['muac_cm']),
             'recent_illness': int(request.form['recent_illness']),
-            'immunization_status': request.form['immunization_status']
+            'gender_Male': 1 if request.form['gender'].strip().lower() == 'male' else 0,
+            'immunization_status_Partial': 1 if request.form['immunization_status'].strip().lower() == 'partial' else 0
         }
 
-        print("[INPUT] Received input:", input_data)
-
-        # Convert input to DataFrame
-        df = pd.DataFrame([input_data])
-
-        # Encode categorical variables
-        encoded = encoder.transform(df)
+        # Convert to DataFrame and align with expected features
+        input_df = pd.DataFrame([input_data])
+        input_encoded = input_df.reindex(columns=expected_features, fill_value=0)
 
         # Make prediction
-        result = model.predict(encoded)[0]
-        print("[INFO] Prediction result:", result)
+        prediction = model.predict(input_encoded)[0]
 
-        prediction_text = "Child is at risk of malnutrition" if result == 1 else "Child is NOT at risk"
+        # Map prediction to human-readable label
+        label_map = {
+            0: "Severely Malnourished",
+            1: "Malnourished",
+            2: "Normal"
+        }
+        prediction_label = label_map.get(int(prediction), "Unknown")
 
-        return render_template('form.html', prediction=prediction_text)
+        return render_template("form.html", prediction=f"Predicted Nutrition Status: {prediction_label}")
 
     except Exception as e:
-        print("[ERROR] Prediction failed:", str(e))
-        return f"Error during prediction: {str(e)}"
+        return render_template("form.html", prediction=f"Error occurred: {str(e)}")
+
+
+
+
+
 
 
 
