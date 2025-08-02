@@ -1,4 +1,4 @@
-print(" Starting run.py")  # Debug 1
+print("Starting run.py")  # Debug 1
 
 try:
     from app import create_app
