@@ -5,6 +5,7 @@ import os
 
 main = Blueprint('main', __name__)
 
+base_dir = os.path.abspath(os.path.dirname(__file__))
 model = joblib.load(os.path.join('models', 'malnutrition_rf_model.pkl'))
 encoder = joblib.load(os.path.join('models', 'encoder.pkl'))
 
@@ -41,3 +42,4 @@ def predict():
 
     except Exception as e:
         return f"Error during prediction: {str(e)}"
+
