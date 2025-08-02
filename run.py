@@ -1,6 +1,3 @@
-
-
-
 print("Starting run.py")  # Debug 1
 
 try:
