@@ -3,19 +3,21 @@ import pandas as pd
 import joblib
 import os
 
-print("✅ Loading routes...")  # This will confirm the file is being loaded
+print("[INFO] Loading routes...")  # Confirm the file is being loaded
 
 main = Blueprint('main', __name__)
 
+# Define model and encoder paths
 base_dir = os.path.abspath(os.path.dirname(__file__))
 model_path = os.path.join(base_dir, '..', 'models', 'malnutrition_rf_model.pkl')
 encoder_path = os.path.join(base_dir, '..', 'models', 'encoder.pkl')
 
+# Load model and encoder
 model = joblib.load(model_path)
-print("✅ Model loaded.")
+print("[INFO] Model loaded.")
 
 encoder = joblib.load(encoder_path)
-print("✅ Encoder loaded.")
+print("[INFO] Encoder loaded.")
 
 
 @main.route('/', methods=['GET'])
@@ -37,9 +39,9 @@ def predict():
             'immunization_status': request.form['immunization_status']
         }
 
-        print("📨 Received input:", input_data)
+        print("[INPUT] Received input:", input_data)
 
-        # Convert to DataFrame
+        # Convert input to DataFrame
         df = pd.DataFrame([input_data])
 
         # Encode categorical variables
@@ -47,15 +49,17 @@ def predict():
 
         # Make prediction
         result = model.predict(encoded)[0]
-        print("✅ Prediction result:", result)
+        print("[INFO] Prediction result:", result)
 
         prediction_text = "Child is at risk of malnutrition" if result == 1 else "Child is NOT at risk"
 
         return render_template('form.html', prediction=prediction_text)
 
     except Exception as e:
-        print("❌ Error:", str(e))
+        print("[ERROR] Prediction failed:", str(e))
         return f"Error during prediction: {str(e)}"
+
+
 
 
 
