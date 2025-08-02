@@ -5,9 +5,13 @@ import os
 
 main = Blueprint('main', __name__)
 
-base_dir = os.path.abspath(os.path.dirname(__file__))
-model = joblib.load(os.path.join('models', 'malnutrition_rf_model.pkl'))
-encoder = joblib.load(os.path.join('models', 'encoder.pkl'))
+model_path = os.path.join(base_dir, '..', 'models', 'malnutrition_rf_model.pkl')
+encoder_path = os.path.join(base_dir, '..', 'models', 'encoder.pkl')
+
+model = joblib.load(model_path)
+encoder = joblib.load(encoder_path)
+
+
 
 @main.route('/', methods=['GET'])
 def home():
@@ -42,4 +46,5 @@ def predict():
 
     except Exception as e:
         return f"Error during prediction: {str(e)}"
+
 
