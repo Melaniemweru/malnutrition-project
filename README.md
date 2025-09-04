@@ -60,4 +60,81 @@ Boxplots revealed a few outliers in weight, height, and MUAC, but most values we
 
 This analysis guided feature selection and highlighted class imbalance as an important consideration during model training.  
 
+## Model Training
+
+The predictive model was built and evaluated in `notebooks/model_training.ipynb`. This workflow covered data preprocessing, handling class imbalance, model training, and saving reusable artifacts for deployment.
+
+### Data Preparation
+- Loaded cleaned dataset (`malnutrition_clean.csv`).
+- One-hot encoded categorical variables: **gender** and **immunization_status**.
+- Encoded the target variable (`nutrition_status`: Normal, At Risk, Malnourished) with `LabelEncoder`.
+- Split data into **training (80%)** and **test (20%)** sets.
+
+### Baseline Model
+- Initial model: **Random Forest Classifier** (`scikit-learn`).
+- Achieved **96% accuracy** on the test set.
+- Evaluation:
+  - Perfect classification for *Normal* cases.
+  - Strong performance for *At Risk* children (Precision = 0.91, Recall = 1.00).
+  - Malnourished children showed lower recall, indicating the class imbalance issue.
+<img width="501" height="393" alt="image" src="https://github.com/user-attachments/assets/ce3dae28-c5b7-4253-996c-aa4a0885baec" />
+
+
+
+Classification Report:
+              precision    recall  f1-score   support
+
+     At Risk       0.91      1.00      0.95        71
+Malnourished       1.00      0.71      0.83        24
+      Normal       1.00      1.00      1.00        87
+
+    accuracy                           0.96       182
+   macro avg       0.97      0.90      0.93       182
+weighted avg       0.96      0.96      0.96       182
+
+### Handling Class Imbalance
+The dataset was imbalanced (many more *Normal* cases than *Malnourished*).  
+To address this, **SMOTE (Synthetic Minority Over-sampling Technique)** was applied to the training data, balancing all classes before retraining.
+
+- Balanced training set: 384 samples per class.
+- Retrained Random Forest achieved:
+  - High **precision and recall** across all three classes.
+  - Improved detection of *Malnourished* cases, critical in healthcare use cases.
+
+  precision    recall  f1-score   support
+
+           0      0.972     0.972     0.972        71
+           1      0.917     0.917     0.917        24
+           2      1.000     1.000     1.000        87
+
+    accuracy                          0.978       182
+   macro avg      0.963     0.963     0.963       182
+weighted avg      0.978     0.978     0.978       182
+
+### Model Persistence
+To support deployment:
+- Trained model saved as **`models/malnutrition_rf_model.pkl`**.
+- Label encoder saved as **`models/encoder.pkl`**.
+- This allows consistent preprocessing and predictions without retraining.
+
+### Making Predictions on New Data
+The trained model can predict nutrition status from raw health inputs (age, gender, weight, height, MUAC, recent illness, immunization status).  
+Pipeline ensures:
+1. One-hot encoding matches training format.
+2. Missing expected features are added with zeros.
+3. Input features are reordered consistently.
+
+
+
+---
+
+This workflow highlights skills in:
+- **Feature encoding and preprocessing**  
+- **Model training and evaluation** with scikit-learn  
+- **Handling class imbalance** using SMOTE  
+- **Saving and reusing ML models** with joblib  
+- **Real-world prediction pipelines** for deployment
+
+
+
 
