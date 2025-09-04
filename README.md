@@ -128,12 +128,29 @@ Pipeline ensures:
 
 ---
 
-This workflow highlights skills in:
-- **Feature encoding and preprocessing**  
-- **Model training and evaluation** with scikit-learn  
-- **Handling class imbalance** using SMOTE  
-- **Saving and reusing ML models** with joblib  
-- **Real-world prediction pipelines** for deployment
+
+
+## Tech Stack
+
+**Languages & Core Tools**
+- Python (data analysis, model training, deployment)
+- Jupyter Notebooks (exploratory analysis, feature engineering, visualization)
+
+**Libraries for Data & ML**
+- pandas, numpy (data preprocessing, manipulation)
+- matplotlib, seaborn (EDA, visualizations)
+- scikit-learn (machine learning models, evaluation, preprocessing)
+- imbalanced-learn (SMOTE for class imbalance handling)
+- joblib (model persistence)
+
+**Deployment & Backend**
+- Flask (web application framework for deployment)
+
+
+**Version Control & Collaboration**
+- Git & GitHub (project tracking, collaboration, documentation)
+
+
 
 
 
