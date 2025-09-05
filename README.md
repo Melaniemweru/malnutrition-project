@@ -184,20 +184,21 @@ Please install the following **once** on your computer:
 
 ##  Daily Workflow – Step-by-Step
 
-Open Git Bash and run:  
+**Open Git Bash and run:**  
 
 
 git clone https://github.com/Melaniemweru/malnutrition-project.git
 cd malnutrition-project
 python -m venv venv
-Activate the virtual environment:
 
-On Windows:
+# Activate the virtual environment:
+
+**On Windows:**
 
 
 source venv/Scripts/activate
 
-On Mac/Linux:
+**On Mac/Linux:**
 
 
 source venv/bin/activate
@@ -222,6 +223,7 @@ Next time you want to re-access the project, just do:
 cd malnutrition-project
 source venv/Scripts/activate   # or venv/bin/activate
 python run.py
+
 
 
 
