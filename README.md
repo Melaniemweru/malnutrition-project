@@ -151,6 +151,78 @@ Pipeline ensures:
 - Git & GitHub (project tracking, collaboration, documentation)
 
 
+Child-Malnutrition-Risk-Prediction/
+├── app/                 # Flask application code (app logic, routes, views)
+├── data/                # Datasets
+│   └── processed/       # Cleaned data for modeling
+├── docker/              # Docker configuration
+├── models/              # Saved artifacts (.pkl, encoders)
+├── notebooks/           # Jupyter notebooks (EDA, model training)
+├── src/                 # Reusable Python modules (preprocessing, utils)
+├── .gitignore           # Git ignore rules
+├── Procfile             # Process definition for deployment
+├── README.md            # Project documentation
+├── requirements.txt     # Python dependencies
+└── run.py               # App entry point (starts Flask server)
+
+
+# How to Run the Project
+
+## Prerequisites (One-time Setup)
+
+Please install the following **once** on your computer:
+
+1. **Git**  
+   Download: [https://git-scm.com/downloads](https://git-scm.com/downloads)  
+   → During install, choose **“Git Bash Here”** option for easy right-click access.  
+
+2. **Python 3.9+**  
+   Download: [https://www.python.org/downloads/](https://www.python.org/downloads/)  
+   → During installation, check **“Add Python to PATH”**.  
+
+---
+
+##  Daily Workflow – Step-by-Step
+
+Open Git Bash and run:  
+
+
+git clone https://github.com/Melaniemweru/malnutrition-project.git
+cd malnutrition-project
+python -m venv venv
+Activate the virtual environment:
+
+On Windows:
+
+
+source venv/Scripts/activate
+
+On Mac/Linux:
+
+
+source venv/bin/activate
+Then install all required packages:
+
+
+pip install -r requirements.txt
+This installs Flask, Pandas, Scikit-learn, Gunicorn, and other dependencies.
+
+Now run the Flask app locally:
+
+
+python run.py
+You’ll see something like:
+
+
+ * Running on http://127.0.0.1:5000
+Open a browser and go to  http://127.0.0.1:5000 to test the nutrition status prediction form.
+
+Next time you want to re-access the project, just do:
+
+cd malnutrition-project
+source venv/Scripts/activate   # or venv/bin/activate
+python run.py
+
 
 
 
