@@ -245,5 +245,42 @@ python run.py
 
 
 
+**Challenges faced:**
+
+Finding a suitable dataset → we had to simulate child health data to proceed.
+
+
+Building the Flask app for deployment from scratch.
+
+
+Managing class imbalance in nutrition status (few malnourished cases compared to normal ones).
+
+
+Setting up deployment with Flask 
+
+
+
+**Future Work / Improvements**
+
+Improve dataset quality and size.
+
+
+Add explainable AI (XAI) features for interpretability.
+
+
+Deploy to cloud services (Heroku, AWS, GCP).
+
+
+Build a mobile-friendly interface for field testing.
+
+
+Integrate real-world testing with health institutions.
+
+**Contributors**
+
+Melanie → Model training notebook, GitHub README, Flask app development.
+
+Nafisah → Data collection & preprocessing, Exploratory Data Analysis (EDA) notebook
+
 
 
