@@ -202,10 +202,14 @@ source venv/Scripts/activate
 
 
 source venv/bin/activate
+
+
 Then install all required packages:
 
 
 pip install -r requirements.txt
+
+
 This installs Flask, Pandas, Scikit-learn, Gunicorn, and other dependencies.
 
 Now run the Flask app locally:
@@ -223,6 +227,7 @@ Next time you want to re-access the project, just do:
 cd malnutrition-project
 source venv/Scripts/activate   # or venv/bin/activate
 python run.py
+
 
 
 
