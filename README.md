@@ -225,9 +225,22 @@ Open a browser and go to  http://127.0.0.1:5000 to test the nutrition status pre
 Next time you want to re-access the project, just do:
 
 cd malnutrition-project
-source venv/Scripts/activate   # or venv/bin/activate
+
+
+
+source venv/Scripts/activate   # or   
+
+venv/bin/activate
+
+
 python run.py
 
+
+**Demo Screenshot**
+
+
+
+<img width="1366" height="768" alt="image" src="https://github.com/user-attachments/assets/a222a91f-5c53-4c99-84c7-94b68676ef62" />
 
 
 
